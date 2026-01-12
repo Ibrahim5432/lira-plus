@@ -8,40 +8,43 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Setup Java
+
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
-      
-      - name: Setup Flutter
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-          channel: 'stable'
-      
+          flutter-version: 3.24.0
+          channel: stable
+
+      - name: Accept Android licenses
+        run: yes | flutter doctor --android-licenses
+
       - name: Get dependencies
         run: flutter pub get
-      
+
       - name: Build APK
         run: flutter build apk --release
-      
+
       - name: Build AAB
         run: flutter build appbundle --release
-      
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
+          name: lira-plus-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-      
+
       - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-aab
+          name: lira-plus-aab
           path: build/app/outputs/bundle/release/app-release.aab
