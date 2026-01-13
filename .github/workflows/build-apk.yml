@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter_app
 
     steps:
       - name: Checkout repository
@@ -46,10 +49,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lira-plus-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: flutter_app/build/app/outputs/flutter-apk/app-release.apk
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
           name: lira-plus-aab
-          path: build/app/outputs/bundle/release/app-release.aab
+          path: flutter_app/build/app/outputs/bundle/release/app-release.aab
